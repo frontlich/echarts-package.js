@@ -161,6 +161,18 @@
         option[type] = clone(option[source]);
     };
 
+    charts.extend = function(name, fun){
+
+        for(var key in Charts.prototype){
+            if(name === key){
+                console.log('the key has been defined');
+                return false;
+            }
+        };
+
+        Charts.prototype[name] = fun;
+    };
+
     charts.noConflict = function(){       //解决变量冲突
 
         if(window.charts === charts){

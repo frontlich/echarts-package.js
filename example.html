@@ -101,10 +101,24 @@
             .series([{name:'abc',data:[5,4,6,8,10]}])
             .create();
 
+        //自定义扩展，为了执行链式调用，必须要在function中返回this对象
+        ch.extend('formatter', function(){
+            this.option.tooltip.formatter = function(params, ticket, callback){
+                var res = '访问来源 : <br/>' + params.name + params.value;
+                setTimeout(function (){
+                    // 仅为了模拟异步回调
+                    callback(ticket, res);
+                }, 1000)
+                return 'loading';
+            };
+            return this;
+        });
+        
         //设置饼图默认选项
         ch.setDefault('pie', {
             backgroundColor:'rgba(80,140,100,.3)',
-            calculable:true
+            calculable:true,
+            calculableColor:'rgba(0,0,0,0)'
         },{
             title:{
                 x:'center',
@@ -143,6 +157,7 @@
                     ]
                 }
             ])
+            .formatter()
             .create();
 
         ch.setDefault('map', {
@@ -157,7 +172,8 @@
            }] 
         });
         //中国地图
-        ch("map", "#div5")
+        ch('map', '#div5')
+            .title('中国地图')
             .series([
             {
                 name: '中国',
@@ -167,6 +183,7 @@
                 ]
             }
         ]).create();
+
     </script>
 </body>
 </html>
