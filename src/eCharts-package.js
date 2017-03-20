@@ -59,7 +59,15 @@
 
         this.option = clone(option[type] || {});
 
-        this.title = function(text, config){         //设置标题
+        this.type = type;
+
+        this.chart = ec.init(document.querySelector(selector));
+
+    };
+
+    Charts.prototype = {
+
+        title : function(text, config){         //设置标题
 
             var oTitle = this.option.title || {};
 
@@ -68,9 +76,9 @@
             this.option.title.text = text;
             
             return this;
-        };
+        },
 
-        this.legend = function(data, config){     //设置图例
+        legend : function(data, config){     //设置图例
 
             var oLegend = this.option.legend || {};
 
@@ -79,9 +87,9 @@
             this.option.legend.data = data;
 
             return this;
-        };
+        },
 
-        this.axis = function(axis, data, config){    //设置坐标轴
+        axis : function(axis, data, config){    //设置坐标轴
 
             var oAxis = this.option[axis] || {};
 
@@ -98,26 +106,25 @@
             }
 
             return this;
-        };
+        },
 
-        this.series = function(series, config){          //type:类型， series:同ehcarts的series
+        series : function(series, config){          //type:类型， series:同ehcarts的series
 
             var oSeries = clone(this.option.series || [{}]);
 
             this.option.series = clone(config ? [Object.assign(oSeries[0], config)] : oSeries);
 
             for(var i = 0; i < series.length; i++){
-                this.option.series[i] = Object.assign({type:type}, oSeries[0], series[i]);
+                this.option.series[i] = Object.assign({type:this.type}, oSeries[0], series[i]);
             };
 
             return this;
-        };
+        },
         
-        this.create = function(){              //创建图表
-            var oChart = ec.init(document.querySelector(selector));
+        create : function(){              //创建图表
             //console.log(this.option);
-            oChart.setOption(this.option);
-        };
+            this.chart.setOption(this.option);
+        }
     };
 
 
