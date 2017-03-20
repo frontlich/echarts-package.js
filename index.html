@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        li{
+            list-style: none;
+            float: left;
+            margin: 10px;
+            width: 600px;
+            height: 400px;
+        }
+    </style>
+    <script src="src/echarts-2.0.js"></script>
+    <script src="src/eCharts-package.js"></script>
+</head>
+<body>
+    <ul>
+        <li id="div1"></li>
+        <li class="div2"></li>
+        <li name="div3"></li>
+        <li class="div4"></li>
+        <li id="div5"></li>
+    </ul>
+    <script>
+        //解决charts变量冲突
+        var ch = charts.noConflict(); 
+
+        //设置柱形图的默认选项
+        ch.setDefault("bar",{
+            backgroundColor:'rgba(0,0,0,.1)',
+            calculable:true
+        },{
+            title:{
+                x:'center',
+                textStyle:{
+                    color:'green',
+                }
+            },
+            tooltip:{
+                formatter:'{c}'
+            },
+            grid:{
+                borderWidth:0
+            },
+            xAxis:{
+                splitLine:{
+                    show:false
+                }
+            },
+            yAxis:{
+                splitLine:{
+                    show:false
+                }
+            }
+        });
+
+        //传入数据生成柱形图
+        ch('bar', '#div1')
+            .title('柱形图1')
+            .axis('xAxis', ['a', 'b', 'c', 'd', 'e'])
+            .axis('yAxis', 'value')
+            .series([{name:'abc',data:[5,4,6,8,30]}])
+            .create();
+
+        ch('bar', '.div2')
+            .title('柱形图2', {subtext:'副标题'})
+            .legend(['abc', 'def'], {x:'right'})
+            .axis('xAxis', 'value')
+            .axis('yAxis', ['a', 'b', 'c', 'd', 'e'])
+            .series([{name:'abc',data:[5,4,6,8,10]},{name:'def',type:'line', data:[1,3,2,5,2,1]}])
+            .create();
+
+        //更改默认选项
+        ch.changeDefault('bar', {
+            title:{
+                x:'center',
+                textStyle:{
+                    fontSize:30,
+                    color:'red'
+                }
+            },
+            series:[{
+                itemStyle:{
+                    normal:{
+                        color:"lightblue"
+                    }
+                }
+            }]
+        });
+
+        ch('bar', 'li[name=div3]')
+            .title('柱形图2')
+            .axis('xAxis', 'value')
+            .axis('yAxis', ['a', 'b', 'c', 'd', 'e'])
+            .series([{name:'abc',data:[5,4,6,8,10]}])
+            .create();
+
+        //设置饼图默认选项
+        ch.setDefault('pie', {
+            backgroundColor:'rgba(80,140,100,.3)',
+            calculable:true
+        },{
+            title:{
+                x:'center',
+                textStyle:{
+                    fontSize:18
+                }
+            },
+            tooltip:{
+                formatter:'{b}:{c}' + '({d}%)'
+            },
+            legend:{
+                x:'right',
+                y:35,
+                orient:'vertical'
+            }
+        },{
+            series:[{
+                center:['50%', '55%'],
+                radius:[60, 120]
+            }]
+        });
+
+        //传入数据生成饼图
+        ch('pie', '.div4')
+            .title('饼图1')
+            .legend(['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎'])
+            .series([
+                {
+                    name:'访问来源',
+                    data:[
+                        {value:335, name:'直接访问'},
+                        {value:310, name:'邮件营销'},
+                        {value:234, name:'联盟广告'},
+                        {value:135, name:'视频广告'},
+                        {value:1548, name:'搜索引擎'}
+                    ]
+                }
+            ])
+            .create();
+
+        ch.setDefault('map', {
+            backgroundColor:'#f1f1f1'
+        },{
+           series:[{
+                selectedMode : 'multiple',
+                itemStyle:{
+                    normal:{label:{show:true}},
+                    emphasis:{label:{show:true}}
+                }
+           }] 
+        });
+        //中国地图
+        ch("map", "#div5")
+            .series([
+            {
+                name: '中国',
+                mapType: 'china',
+                data:[
+                    {name:'广东',selected:true}
+                ]
+            }
+        ]).create();
+    </script>
+</body>
+</html>

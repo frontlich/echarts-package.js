@@ -104,7 +104,7 @@
 
             var oSeries = clone(this.option.series || [{}]);
 
-            this.option.series = clone(config ? Object.assign(oSeries[0], config) : oSeries);
+            this.option.series = clone(config ? [Object.assign(oSeries[0], config)] : oSeries);
 
             for(var i = 0; i < series.length; i++){
                 this.option.series[i] = Object.assign({type:type}, oSeries[0], series[i]);
