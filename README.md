@@ -49,6 +49,18 @@ public/component/data选项详见[echarts文档中的option](http://echarts.baid
 <br>
 <br>
 <br>
+## 添加扩展
+
+```charts.extend(name, fun);```
+
+1. name:扩展函数的名称
+2. fun:扩展的函数
+
+charts的extend方法可以用来扩展自定义方法，用于补充未封装或自定义的一些方法。<br>
+**注意：为了能够链式调用，你需要在你自定义的function中返回this对象。**
+<br>
+<br>
+<br>
 ## charts方法
 charts的方法支持链式调用，例如：
 <code><pre>
